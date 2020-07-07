@@ -30,7 +30,10 @@ const questions = [
         message: "What is your Role",
         name: "role",
         choices: ["Intern", "Engineer", "Manager"]
-    },
+    }
+]
+
+const questionsManager = [
     {
         type: "input",
         message: "Please enter your name",
@@ -45,11 +48,7 @@ const questions = [
         type: "input",
         message: "What is your email?",
         name:"email"
-    }
-
-]
-
-const questionsManager = [
+    },
     {    
         type: "input",
         message: "What is your office number?",
@@ -58,6 +57,21 @@ const questionsManager = [
 ]
 
 const questionsEngineer = [
+    {
+        type: "input",
+        message: "Please enter your name",
+        name:"name"
+    },
+    {
+        type: "input",
+        message: "What is your id Number?",
+        name: "idNumber"
+    },
+    {
+        type: "input",
+        message: "What is your email?",
+        name:"email"
+    },
     {    
         type: "input",
         message: "What is your Github account?",
@@ -66,6 +80,21 @@ const questionsEngineer = [
 ]
 
 const questionsIntern = [
+    {
+        type: "input",
+        message: "Please enter your name",
+        name:"name"
+    },
+    {
+        type: "input",
+        message: "What is your id Number?",
+        name: "idNumber"
+    },
+    {
+        type: "input",
+        message: "What is your email?",
+        name:"email"
+    },
     {    
         type: "input",
         message: "What is school are you internning from?",
@@ -89,24 +118,24 @@ function startApp() {
 
 function addMember() {
 
-    inquirer.prompt(questions).then(({role, name, idNumber, email}) => {
+    inquirer.prompt(questions).then(({role}) => {
         if (role === "Engineer") {
-            inquirer.prompt(questionsEngineer).then(({github}) => {
-                engineer = new Engineer({name, role, idNumber, email, github});
+            inquirer.prompt(questionsEngineer).then((answers) => {
+                engineer = new Engineer(answers.name, answers.role, answers.idNumber, answers.email, answers.github);
                 teamMembers.push(engineer);  
                 console.log(engineer);
                 startApp()
             })
         } else if (role === "Intern") {
-            inquirer.prompt(questionsIntern).then((school) => {
-                intern = new Intern(name, role, idNumber, email, school);
+            inquirer.prompt(questionsIntern).then((answers) => {
+                intern = new Intern(answers.name, answers.role, answers.idNumber, answers.email, answers.school);
                 teamMembers.push(intern);
                 console.log(intern);  
                 startApp()
             })
         } else if (role === "Manager") {
-            inquirer.prompt(questionsManager).then(() => {
-                manager = new Manager(name, role, idNumber, email, officeNumber);
+            inquirer.prompt(questionsManager).then((answers) => {
+                manager = new Manager(answers.name, answers.role, answers.idNumber, answers.email, answers.officeNumber);
                 teamMembers.push(manager); 
                 console.log(manager);
                 startApp()
